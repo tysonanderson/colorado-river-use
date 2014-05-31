@@ -1,0 +1,28 @@
+{
+ "name": "lower_basin",
+ "children": [
+  {
+   "name": "Arizona",
+   "children": [
+   		{"name": "Southern Nevada Water Authority", "size": 3938},
+   		{"name": "Fort Mojave Indian Reservation", "size": 3938},
+   		{"name": "Lake Havasu City", "size": 3938},
+   	]
+   },
+   {
+   "name": "California",
+   "children": [
+   		{"name": "Southern Nevada Water Authority", "size": 3938},
+   		{"name": "Fort Mojave Indian Reservation", "size": 3938},
+   		{"name": "Lake Havasu City", "size": 3938},
+   	]
+   },
+   {
+   "name": "Nevada",
+   "children": [
+   		{"name": "Southern Nevada Water Authority", "size": 3938},
+   		{"name": "Fort Mojave Indian Reservation", "size": 3938},
+   		{"name": "Lake Havasu City", "size": 3938},
+   	]
+   }]
+}
