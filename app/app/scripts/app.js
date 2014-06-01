@@ -23,7 +23,22 @@ define(['d3'], function (d3) {
     timeline.append("g")
     	.call(timeline_axis);
 
+    var treemap = d3.layout.treemap()
+	    .size([width, height])
+	    .sticky(true)
+	    .value(function(d) { return d.size; });
 
-    console.log( timeline_x(2000) );
+    
+
+
+   	d3.csv("data/combined.csv", function (data){
+
+   		var nest = d3.nest()
+		    .key(function(d) { return d.State; })
+		    .entries(data);
+
+		 console.log(nest);
+
+   	});
 
 });
