@@ -19,19 +19,44 @@
 
         <!-- Bootstrap -->
         <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
     </head>
-    <body class="container">
+    <body class="container-fluid">
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-
+        <h1>COLORADO RIVER USAGE &mdash; Lower Basin</h1>
+        <h4 id="year">Year:1971</h4>
         <div id="timeline" class="vis">
 
         </div>
-        <h2 id="year"></h2>
+        
 
         <div id="tree_container" class="vis"></div>
+        <div id="tooltip">
+            <span id="user" class="mouse-info"></span>
+<!--             <span class="glyphicon glyphicon-tree-conifer"></span>
+            <span class="glyphicon glyphicon-home"></span>
+            <span class="glyphicon glyphicon-leaf"></span> -->
+            <span id="type" class="mouse-info"></span>
+            <span id="used" class="mouse-info"></span>
+            <span id="percentage" class="mouse-info"></span>
+        </div>
+
+        <div class="modal fade" id="data_modal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Modal Header</h3>
+  </div>
+  <div class="modal-body">
+    <p>Test Modal</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <a href="#" class="btn btn-primary">Save Changes</a>
+  </div>
+</div>
 
 
         <!-- build:js scripts/vendor.js -->
@@ -54,5 +79,6 @@
         <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
         <!-- endbuild -->
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/bootstrap/js/modal.js"></script>
 </body>
 </html>
