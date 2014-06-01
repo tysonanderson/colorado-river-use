@@ -1,7 +1,15 @@
 /*global define */
 define(['d3'], function (d3) {
     'use strict';
-    //$('#data_modal').modal();
+    $('#overlay').hide();
+    $('#popup-close').on('click', function (e){
+    	$('#overlay').hide();
+    })
+    $(window).keypress(function(e){
+    	if(e.charCode == 32){
+    		$('#overlay').hide();
+    	}
+    })
 
     //vis variables
     var w = $('body').width() - 20,
@@ -102,7 +110,7 @@ define(['d3'], function (d3) {
       		.on('mouseover', function(e){
       			d3.select('#tooltip').style("top", e.pageY).style("left", e.pageX)
       			$('#user').html(e['Water User'])
-      			$('#used').html("TOTAL USE: " + thou(e['1971']) + " af")
+      			$('#used').html("TOTAL USE: " + thou(e['1971']) + " kaf")
       			$('#type').html("TYPE: " + e['Category'])
       			$('#percentage').html( perc(e[currentYear] / $.grep(year_sums, function(d){ return d.year == currentYear })[0].total))
       			d3.select(this).attr("opacity", .5);
@@ -114,6 +122,10 @@ define(['d3'], function (d3) {
       			$('#used').html('')
       			$('#percentage').html('')
       			$('#type').html('')
+      		})
+      		.on('click', function (e){
+      			$('#overlay').show();
+      			drawOverlay(e);
       		});
 
 		cell.append("rect")
@@ -185,6 +197,86 @@ define(['d3'], function (d3) {
 		// 	    .attr("width", function(d) { return d.dx; })
 		// 	    .attr("height", function(d) { return d.dy; })
 		// }, 1000)
+
+		//BEGIN POPUP CODE
+		function drawOverlay(data){
+			$('#overlay').offset({ top: 100, left: 300})
+
+			d3.select("svg").remove();
+			var margin = {top: 50, right: 20, bottom: 30, left: 80},
+		    width = 960 - margin.left - margin.right,
+		    height = 500 - margin.top - margin.bottom;
+
+			var parseDate = d3.time.format("%d-%b-%y").parse;
+
+			var x = d3.time.scale()
+			    .range([0, width]);
+
+			var y = d3.scale.linear()
+			    .range([height, 0]);
+
+			var xAxis = d3.svg.axis()
+			    .scale(x)
+			    .orient("bottom");
+
+			var yAxis = d3.svg.axis()
+			    .scale(y)
+			    .orient("left");
+
+			var line2 = d3.svg.line()
+			    .x(function(d) { return x(d.date); })
+			    .y(function(d) { return y(d.value); })
+			    .interpolate("basis");
+
+			var svg = d3.select("#overlay").append("svg")
+			    .attr("width", width + margin.left + margin.right)
+			    .attr("height", height + margin.top + margin.bottom)
+			  .append("g")
+			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			var datum = data;
+
+		    var list = d3.range(1971, 2012, 1),
+		        vals = [];
+		    /* Iterate over the range of years and construct an object containing a year-value
+		    pair */
+		    for (var i = 0; i < list.length; i++) {
+		        vals.push({date:  new Date(list[i], 0, 1), value: +datum[ list[i].toString()]})
+		    };
+		    
+
+		    x.domain(d3.extent(vals, function(d) { return d.date; }));
+		    y.domain(d3.extent(vals, function(d) { return d.value; }));
+
+		    svg.append("g")
+		        .attr("class", "x axis")
+		        .attr("transform", "translate(0," + height + ")")
+		        .call(xAxis);
+
+		    svg.append("g")
+		        .attr("class", "y axis")
+		        .call(yAxis)
+		      .append("text")
+		        .attr("transform", "rotate(-90)")
+		        .attr("y", 6)
+		        .attr("dy", ".71em")
+		        .style("text-anchor", "end")
+		        .text("Thousand acre feet");
+		    
+		    svg.append("path")
+		        .datum(vals)
+		        .attr("class", "timepath")
+		        .attr("d", line2);
+		    
+		    svg.append("svg:text")
+		       .attr("x", 0)
+		       .attr("y", -20)
+		       .attr("class", "overlay-title")
+		       .text(datum["State"] + ' - ' + datum["Water User"]);
+
+
+		}
+
 
 
    	});

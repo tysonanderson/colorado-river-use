@@ -60,6 +60,13 @@ h2{
 #percentage{
     font-weight: 300;
 }
+#overlay{
+    position: absolute;
+    background-color: white;
+}
+.overlay-title{
+    font-weight: 900;
+}
 
 .timepath {
     stroke: #4DA193;
