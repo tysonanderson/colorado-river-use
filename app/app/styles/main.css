@@ -20,3 +20,9 @@ path.domain{
     stroke-width: 1px;
     stroke: red;
 }
+
+.cell rect{
+    stroke: #999;
+    stroke-opacity: .2;
+    stroke-width: 1px;
+}
