@@ -35,14 +35,21 @@ d3.text('../data/combined.csv', function (unparsedData) {
         .domain(d3.extent(vals, function(d) { return d.date; }))
         .range([0 + margin, w - margin])
         
-       console.log(d3.extent(data, function(d) { return d.date; })) 
+    var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+    
     var svg = d3.select("body") 
         .append("svg:svg")
         .attr("width", w)
         .attr("height", h)
 
-    //var g = svg.append("svg:g")
-     //   .attr("transform", "translate(0, 200)");          
+    var g = svg.append("svg:g")
+       .attr("transform", "translate(0, 200)");          
     
     var line = d3.svg.line()
         .x(function(d) { return x(d.date); })
@@ -52,10 +59,20 @@ d3.text('../data/combined.csv', function (unparsedData) {
     
     svg.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + h + ")")
     .call(xAxis);
 
- /*   g.append("svg:line")
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Price ($)");
+    
+/*   g.append("svg:line")
         .attr("x1", x(0))
         .attr("y1", -1 * y(0))
         .attr("x2", x(w))
@@ -66,7 +83,7 @@ d3.text('../data/combined.csv', function (unparsedData) {
         .attr("y1", -1 * y(0))
         .attr("x2", x(0))
         .attr("y2", -1 * y(d3.max(data)))
-
+/*
     g.selectAll(".xLabel")
         .data(x.ticks(5))
         .enter().append("svg:text")
