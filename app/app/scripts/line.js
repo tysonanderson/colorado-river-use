@@ -1,18 +1,22 @@
-d3.text('nv.csv', function(unparsedData)
+d3.text('../data/combined.csv', function (unparsedData)
         {
     var data = d3.csv.parse(unparsedData);
-    w = 400,
-    h = 200,
-    margin = 20
+    var datum = data[0];
+    var w = 400;
+    var h = 200;
+    var margin = 20;
+            console.log("datum", datum);
 
     var list = d3.range(1971, 2012, 1);
-    console.log(data[0].keys);
-
-
-    console.log(data[0].keys.forEach(function(d) { 
-        if (+d > 0) { return d};
-      }))
-
+            
+    var nest = d3.nest()
+        .key(function(d) { return d.State; })
+        .key(function(d) { return d.Category; })
+        //.key(function(d) { return d['Water User']; })
+        .entries(datum);
+        
+    console.log("nest", nest);
+            
     var y = d3.scale.linear()
         .domain([d3.min(data), d3.max(data)])
         .range([0 + margin, h - margin])
@@ -21,7 +25,21 @@ d3.text('nv.csv', function(unparsedData)
         .domain([0, data.length])
         .range([0 + margin, w - margin])
 
-    //console.log(data);
+    console.log(datum['2012']);
+    var vals = []
+    for (var i = 0; i < list.length; i++) {
+        vals.push(  datum[ list[i].toString()])
+    };
+            console.log("vals",vals);
+    var seriesData = varNames.map(function (name) {
+      return {
+        name: name,
+        values: data.map(function (d) {
+          return {name: name, label: d[labelVar], value: +d[name]};
+        })
+      };
+    });
+    console.log("series", seriesData);
 
     var parseDate = d3.time.format('%y').parse;
 
