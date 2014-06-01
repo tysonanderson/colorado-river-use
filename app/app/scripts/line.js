@@ -64,9 +64,15 @@ d3.csv('../data/combined.csv', function (error, data) {
         .attr("dy", ".71em")
         .style("text-anchor", "end")
         .text("Thousand acre feet");
-
+    
     svg.append("path")
         .datum(vals)
         .attr("class", "line")
         .attr("d", line);
+    
+    svg.append("svg:text")
+       .attr("x", 50)
+       .attr("y", 35)
+       .text(datum["State"] + ' - ' + datum["Water User"]);
+
 });
